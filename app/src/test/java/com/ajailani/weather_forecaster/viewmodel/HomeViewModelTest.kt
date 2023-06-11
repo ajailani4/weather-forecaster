@@ -46,6 +46,7 @@ class HomeViewModelTest {
             val weatherInfo = homeViewModel.homeUiState.weatherInfo
 
             assertEquals("Get current weather shouldn't be loading", false, isLoading)
+            assertNotNull("WeatherInfo shouldn't be null", weatherInfo)
             assertEquals("Weather should be 'Rain'", "Rain", weatherInfo!!.weather[0].main)
         }
     }
