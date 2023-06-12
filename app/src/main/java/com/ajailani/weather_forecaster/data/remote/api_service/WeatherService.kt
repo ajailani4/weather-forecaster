@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.data.remote.api_service
 
+import com.ajailani.weather_forecaster.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 
@@ -16,6 +17,8 @@ class WeatherService(private val httpClient: HttpClient) {
             units?.let {
                 parameters.append("units", it)
             }
+
+            parameters.append("appid", BuildConfig.API_KEY)
         }
     }
 }
