@@ -1,7 +1,7 @@
 package com.ajailani.weather_forecaster.domain.model
 
 data class WeatherInfo(
-    val weather: List<Weather>,
+    val weathers: List<Weather>,
     val main: WeatherMain,
     val wind: WeatherWind
 )
