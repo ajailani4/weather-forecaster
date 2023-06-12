@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ajailani.weather_forecaster.ui.screen.home.HomeScreen
+import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.ui.theme.WeatherForecasterTheme
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +24,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+                    val homeViewModel = koinViewModel<HomeViewModel>()
+                    val homeUiState = homeViewModel.homeUiState
+
+                    HomeScreen(homeUiState)
                 }
             }
         }
