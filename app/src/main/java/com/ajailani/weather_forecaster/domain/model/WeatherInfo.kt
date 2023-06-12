@@ -7,17 +7,17 @@ data class WeatherInfo(
 )
 
 data class Weather(
-    val id: String,
+    val id: Int,
     val main: String,
     val description: String
 )
 
 data class WeatherMain(
-    val temp: Float,
-    val feelsLike: Float,
-    val humidity: Int
+    val temp: Int? = null,
+    val feelsLike: Int? = null,
+    val humidity: Int? = null
 )
 
 data class WeatherWind(
-    val speed: Float
+    val speed: Int? = null
 )

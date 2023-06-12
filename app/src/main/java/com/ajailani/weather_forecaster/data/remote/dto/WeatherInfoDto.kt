@@ -15,19 +15,20 @@ data class WeatherInfoDto(
 
 @Serializable
 data class WeatherDto(
-    val id: String,
+    val id: Int,
     val main: String,
     val description: String
 )
 
 @Serializable
 data class WeatherMainDto(
-    val temp: Float,
-    val feelsLike: Float,
-    val humidity: Int
+    val temp: Float? = null,
+    @SerialName("feels_like")
+    val feelsLike: Float? = null,
+    val humidity: Int? = null
 )
 
 @Serializable
 data class WeatherWindDto(
-    val speed: Float
+    val speed: Float? = null
 )

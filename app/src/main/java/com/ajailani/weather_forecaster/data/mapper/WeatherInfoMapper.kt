@@ -25,12 +25,12 @@ fun WeatherDto.toWeather() =
 
 fun WeatherMainDto.toWeatherMain() =
     WeatherMain(
-        temp = temp,
-        feelsLike = feelsLike,
+        temp = temp?.toInt(),
+        feelsLike = feelsLike?.toInt(),
         humidity = humidity
     )
 
 fun WeatherWindDto.toWeatherWind() =
     WeatherWind(
-        speed = speed
+        speed = speed?.toInt()
     )
