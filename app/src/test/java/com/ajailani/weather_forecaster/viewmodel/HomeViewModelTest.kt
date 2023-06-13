@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.viewmodel
 
+import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.util.Resource
@@ -25,9 +26,27 @@ class HomeViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
+    private lateinit var getWeatherInfoUseCase: GetWeatherInfoUseCase
+
+    @Mock
     private lateinit var syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
 
     private lateinit var homeViewModel: HomeViewModel
+
+    @Test
+    fun `Get weather info should be success`() {
+        testCoroutineRule.runTest {
+            val resource = flowOf(dummyWeatherInfo)
+
+            doReturn(resource).`when`(getWeatherInfoUseCase)()
+
+            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
+
+            val weatherInfo = homeViewModel.homeUiState.weatherInfo
+
+            assertEquals("Weather should be 'Rain'", "Rain", weatherInfo!!.weathers[0].main)
+        }
+    }
 
     @Test
     fun `Sync current weather should be success`() {
@@ -40,7 +59,7 @@ class HomeViewModelTest {
                 units = anyString()
             )
 
-            homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
+            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
 
             val errorMessage = homeViewModel.homeUiState.errorMessage
 
@@ -50,7 +69,7 @@ class HomeViewModelTest {
 
     @Test
     fun `Sync current weather should be fail`() {
-        homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
+        homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
 
         val errorMessage = homeViewModel.homeUiState.errorMessage
 

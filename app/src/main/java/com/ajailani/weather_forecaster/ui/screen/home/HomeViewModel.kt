@@ -5,30 +5,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
+    private val getWeatherInfoUseCase: GetWeatherInfoUseCase,
     private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
 ) : ViewModel() {
     var homeUiState by mutableStateOf(HomeUiState())
         private set
 
     init {
+        getWeatherInfo()
         syncCurrentWeather()
     }
 
-    /*private fun getCurrentWeather() {
+    private fun getWeatherInfo() {
         viewModelScope.launch {
-            getCurrentWeatherUseCase().catch {
-                homeUiState = homeUiState.copy()
+            getWeatherInfoUseCase().catch {
+                homeUiState = homeUiState.copy(errorMessage = it.message)
             }.collect {
-
+                homeUiState = homeUiState.copy(weatherInfo = it)
             }
         }
-    }*/
+    }
 
     private fun syncCurrentWeather() {
         viewModelScope.launch {

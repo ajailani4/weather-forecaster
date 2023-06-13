@@ -5,7 +5,7 @@ import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.model.WeatherMain
 import com.ajailani.weather_forecaster.domain.model.WeatherWind
 
-val weatherInfo = WeatherInfo(
+val dummyWeatherInfo = WeatherInfo(
     weathers = listOf(
         Weather(
             id = 1,

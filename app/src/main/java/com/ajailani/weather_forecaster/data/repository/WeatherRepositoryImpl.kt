@@ -4,16 +4,22 @@ import com.ajailani.weather_forecaster.data.local.WeatherLocalDataSource
 import com.ajailani.weather_forecaster.data.mapper.toWeatherInfo
 import com.ajailani.weather_forecaster.data.remote.data_source.WeatherRemoteDataSource
 import com.ajailani.weather_forecaster.data.remote.dto.WeatherInfoDto
+import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class WeatherRepositoryImpl(
     private val weatherLocalDataSource: WeatherLocalDataSource,
     private val weatherRemoteDataSource: WeatherRemoteDataSource
 ) : WeatherRepository {
+    override fun getWeatherInfo(): Flow<WeatherInfo> {
+        TODO("Not yet implemented")
+    }
+
     override fun syncCurrentWeather(
         lat: Double,
         lon: Double,
