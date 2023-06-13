@@ -5,7 +5,7 @@ import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
-    fun getWeatherInfo(): Flow<WeatherInfo>
+    fun getWeatherInfo(): Flow<WeatherInfo?>
 
     fun syncWeatherInfo(
         lat: Double,

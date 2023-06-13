@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class WeatherInfoEntity(
     @PrimaryKey
-    val id: Int,
+    val id: Int = 1,
     val main: String,
     val description: String,
     val temp: Float? = null,
