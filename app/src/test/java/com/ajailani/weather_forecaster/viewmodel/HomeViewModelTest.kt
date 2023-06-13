@@ -4,7 +4,7 @@ import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.TestCoroutineRule
-import com.ajailani.weather_forecaster.util.weatherInfo
+import com.ajailani.weather_forecaster.util.dummyWeatherInfo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertEquals
@@ -32,7 +32,7 @@ class HomeViewModelTest {
     @Test
     fun `Sync current weather should be success`() {
         testCoroutineRule.runTest {
-            val resource = flowOf(Resource.Success(weatherInfo))
+            val resource = flowOf(Resource.Success(Any()))
 
             doReturn(resource).`when`(syncCurrentWeatherUseCase)(
                 lat = anyDouble(),
@@ -42,12 +42,9 @@ class HomeViewModelTest {
 
             homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
 
-            val isLoading = homeViewModel.homeUiState.loading
-            val weatherInfo = homeViewModel.homeUiState.weatherInfo
+            val errorMessage = homeViewModel.homeUiState.errorMessage
 
-            assertEquals("Get current weather shouldn't be loading", false, isLoading)
-            assertNotNull("WeatherInfo shouldn't be null", weatherInfo)
-            assertEquals("Weather should be 'Rain'", "Rain", weatherInfo!!.weathers[0].main)
+            assertEquals("Error message should be null", null, errorMessage)
         }
     }
 
@@ -55,12 +52,8 @@ class HomeViewModelTest {
     fun `Sync current weather should be fail`() {
         homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
 
-        val isLoading = homeViewModel.homeUiState.loading
         val errorMessage = homeViewModel.homeUiState.errorMessage
-        val weatherInfo = homeViewModel.homeUiState.weatherInfo
 
-        assertEquals("Get current weather shouldn't be loading", false, isLoading)
         assertNotNull("Error message shouldn't be null", errorMessage)
-        assertEquals("WeatherIno should be null", null, weatherInfo)
     }
 }

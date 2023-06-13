@@ -29,7 +29,7 @@ class WeatherRepositoryImpl(
             when (response.status) {
                 HttpStatusCode.OK -> {
                     val responseBody = response.body<WeatherInfoDto>()
-                    emit(Resource.Success(responseBody.toWeatherInfo()))
+                    emit(Resource.Success(Any()))
                 }
 
                 HttpStatusCode.InternalServerError -> {

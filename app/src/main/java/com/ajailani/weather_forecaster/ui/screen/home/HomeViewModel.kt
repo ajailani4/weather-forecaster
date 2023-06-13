@@ -17,36 +17,35 @@ class HomeViewModel(
         private set
 
     init {
-        getCurrentWeather()
+        syncCurrentWeather()
     }
 
-    private fun getCurrentWeather() {
-        homeUiState = homeUiState.copy(loading = true)
+    /*private fun getCurrentWeather() {
+        viewModelScope.launch {
+            getCurrentWeatherUseCase().catch {
+                homeUiState = homeUiState.copy()
+            }.collect {
 
+            }
+        }
+    }*/
+
+    private fun syncCurrentWeather() {
         viewModelScope.launch {
             syncCurrentWeatherUseCase(
                 lat = -6.1753942,
                 lon = 106.827183,
                 units = "metric"
             ).catch {
-                homeUiState = homeUiState.copy(
-                    loading = false,
-                    errorMessage = it.message
-                )
+                homeUiState = homeUiState.copy(errorMessage = it.message)
             }.collect {
                 homeUiState = when (it) {
                     is Resource.Success -> {
-                        homeUiState.copy(
-                            loading = false,
-                            weatherInfo = it.data
-                        )
+                        homeUiState.copy(errorMessage = null)
                     }
 
                     is Resource.Error -> {
-                        homeUiState.copy(
-                            loading = false,
-                            errorMessage = it.message
-                        )
+                        homeUiState.copy(errorMessage = it.message)
                     }
                 }
             }

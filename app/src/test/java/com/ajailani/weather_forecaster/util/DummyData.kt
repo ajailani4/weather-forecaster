@@ -6,19 +6,19 @@ import com.ajailani.weather_forecaster.domain.model.WeatherMain
 import com.ajailani.weather_forecaster.domain.model.WeatherWind
 
 val weatherInfo = WeatherInfo(
-    weather = listOf(
+    weathers = listOf(
         Weather(
-            id = "1",
+            id = 1,
             main = "Rain",
             description = "Moderate rain"
         )
     ),
     main = WeatherMain(
-        temp = 25.0f,
-        feelsLike = 28.0f,
+        temp = 25,
+        feelsLike = 28,
         humidity = 20
     ),
     wind = WeatherWind(
-        speed = 0.62f
+        speed = 7
     )
 )

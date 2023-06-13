@@ -28,5 +28,5 @@ val dataModule = module {
     single { WeatherRemoteDataSource(get()) }
 
     // Repository
-    single<WeatherRepository> { WeatherRepositoryImpl(get()) }
+    single<WeatherRepository> { WeatherRepositoryImpl(get(), get()) }
 }

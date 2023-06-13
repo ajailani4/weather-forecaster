@@ -1,6 +1,5 @@
 package com.ajailani.weather_forecaster.domain.repository
 
-import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.ResourceType
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +12,7 @@ class WeatherRepositoryFake : WeatherRepository {
         lat: Double,
         lon: Double,
         units: String?
-    ): Flow<Resource<WeatherInfo>> =
+    ): Flow<Resource<Any>> =
         when (resourceType) {
             ResourceType.Success -> flowOf(Resource.Success())
 

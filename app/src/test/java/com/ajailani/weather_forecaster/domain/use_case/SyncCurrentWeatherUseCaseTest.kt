@@ -1,6 +1,5 @@
 package com.ajailani.weather_forecaster.domain.use_case
 
-import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepositoryFake
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.ResourceType
@@ -36,7 +35,25 @@ class SyncCurrentWeatherUseCaseTest {
 
             assertEquals(
                 "Resource should be success",
-                Resource.Success<WeatherInfo>(null),
+                Resource.Success<String>(),
+                actualResource
+            )
+        }
+
+    @Test
+    fun `Sync current weather resource should be error`() =
+        runTest(UnconfinedTestDispatcher()) {
+            weatherRepositoryFake.setResourceType(ResourceType.Error)
+
+            val actualResource = syncCurrentWeatherUseCase(
+                lat = -6.17,
+                lon = 106.8,
+                units = "metric"
+            ).first()
+
+            assertEquals(
+                "Resource should be error",
+                Resource.Error<String>(),
                 actualResource
             )
         }
