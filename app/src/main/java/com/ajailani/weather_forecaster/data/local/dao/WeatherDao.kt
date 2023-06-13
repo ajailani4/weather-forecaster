@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ajailani.weather_forecaster.data.local.entity.WeatherInfoEntity
-import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,5 +13,5 @@ interface WeatherDao {
     suspend fun insertWeatherInfo(weatherInfoEntity: WeatherInfoEntity)
 
     @Query("SELECT * FROM WeatherInfoEntity")
-    fun getWeatherInfo(): Flow<WeatherInfo>
+    fun getWeatherInfo(): Flow<WeatherInfoEntity>
 }
