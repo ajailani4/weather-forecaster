@@ -5,7 +5,7 @@ import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
-    fun getCurrentWeather(
+    fun syncCurrentWeather(
         lat: Double,
         lon: Double,
         units: String?

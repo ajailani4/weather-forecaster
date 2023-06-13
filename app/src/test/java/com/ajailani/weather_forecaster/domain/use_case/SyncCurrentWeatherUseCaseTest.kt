@@ -13,22 +13,22 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class GetCurrentWeatherUseCaseTest {
+class SyncCurrentWeatherUseCaseTest {
     private lateinit var weatherRepositoryFake: WeatherRepositoryFake
-    private lateinit var getCurrentWeatherUseCase: GetCurrentWeatherUseCase
+    private lateinit var syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
 
     @Before
     fun setUp() {
         weatherRepositoryFake = WeatherRepositoryFake()
-        getCurrentWeatherUseCase = GetCurrentWeatherUseCase(weatherRepositoryFake)
+        syncCurrentWeatherUseCase = SyncCurrentWeatherUseCase(weatherRepositoryFake)
     }
 
     @Test
-    fun `Get current weather resource should be success`() =
+    fun `Sync current weather resource should be success`() =
         runTest(UnconfinedTestDispatcher()) {
             weatherRepositoryFake.setResourceType(ResourceType.Success)
 
-            val actualResource = getCurrentWeatherUseCase(
+            val actualResource = syncCurrentWeatherUseCase(
                 lat = -6.17,
                 lon = 106.8,
                 units = "metric"

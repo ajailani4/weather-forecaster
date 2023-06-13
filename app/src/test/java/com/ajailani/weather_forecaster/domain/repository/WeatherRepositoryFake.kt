@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOf
 class WeatherRepositoryFake : WeatherRepository {
     private lateinit var resourceType: ResourceType
 
-    override fun getCurrentWeather(
+    override fun syncCurrentWeather(
         lat: Double,
         lon: Double,
         units: String?

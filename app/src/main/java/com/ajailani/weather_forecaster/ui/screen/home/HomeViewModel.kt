@@ -5,14 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ajailani.weather_forecaster.domain.use_case.GetCurrentWeatherUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase
+    private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
 ) : ViewModel() {
     var homeUiState by mutableStateOf(HomeUiState())
         private set
@@ -25,7 +24,7 @@ class HomeViewModel(
         homeUiState = homeUiState.copy(loading = true)
 
         viewModelScope.launch {
-            getCurrentWeatherUseCase(
+            syncCurrentWeatherUseCase(
                 lat = -6.1753942,
                 lon = 106.827183,
                 units = "metric"

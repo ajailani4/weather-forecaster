@@ -1,6 +1,6 @@
 package com.ajailani.weather_forecaster.viewmodel
 
-import com.ajailani.weather_forecaster.domain.use_case.GetCurrentWeatherUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.TestCoroutineRule
@@ -25,35 +25,35 @@ class HomeViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var getCurrentWeatherUseCase: GetCurrentWeatherUseCase
+    private lateinit var syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
 
     private lateinit var homeViewModel: HomeViewModel
 
     @Test
-    fun `Get current weather should be success`() {
+    fun `Sync current weather should be success`() {
         testCoroutineRule.runTest {
             val resource = flowOf(Resource.Success(weatherInfo))
 
-            doReturn(resource).`when`(getCurrentWeatherUseCase)(
+            doReturn(resource).`when`(syncCurrentWeatherUseCase)(
                 lat = anyDouble(),
                 lon = anyDouble(),
                 units = anyString()
             )
 
-            homeViewModel = HomeViewModel(getCurrentWeatherUseCase)
+            homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
 
             val isLoading = homeViewModel.homeUiState.loading
             val weatherInfo = homeViewModel.homeUiState.weatherInfo
 
             assertEquals("Get current weather shouldn't be loading", false, isLoading)
             assertNotNull("WeatherInfo shouldn't be null", weatherInfo)
-            assertEquals("Weather should be 'Rain'", "Rain", weatherInfo!!.weather[0].main)
+            assertEquals("Weather should be 'Rain'", "Rain", weatherInfo!!.weathers[0].main)
         }
     }
 
     @Test
-    fun `Get current weather should be fail`() {
-        homeViewModel = HomeViewModel(getCurrentWeatherUseCase)
+    fun `Sync current weather should be fail`() {
+        homeViewModel = HomeViewModel(syncCurrentWeatherUseCase)
 
         val isLoading = homeViewModel.homeUiState.loading
         val errorMessage = homeViewModel.homeUiState.errorMessage
