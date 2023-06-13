@@ -13,7 +13,7 @@ class WeatherRepositoryFake : WeatherRepository {
         TODO("Not yet implemented")
     }
 
-    override fun syncCurrentWeather(
+    override fun syncWeatherInfo(
         lat: Double,
         lon: Double,
         units: String?

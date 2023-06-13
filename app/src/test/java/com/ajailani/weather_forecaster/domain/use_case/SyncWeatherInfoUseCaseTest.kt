@@ -12,22 +12,22 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SyncCurrentWeatherUseCaseTest {
+class SyncWeatherInfoUseCaseTest {
     private lateinit var weatherRepositoryFake: WeatherRepositoryFake
-    private lateinit var syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
+    private lateinit var syncWeatherInfoUseCase: SyncWeatherInfoUseCase
 
     @Before
     fun setUp() {
         weatherRepositoryFake = WeatherRepositoryFake()
-        syncCurrentWeatherUseCase = SyncCurrentWeatherUseCase(weatherRepositoryFake)
+        syncWeatherInfoUseCase = SyncWeatherInfoUseCase(weatherRepositoryFake)
     }
 
     @Test
-    fun `Sync current weather resource should be success`() =
+    fun `Sync weather info resource should be success`() =
         runTest(UnconfinedTestDispatcher()) {
             weatherRepositoryFake.setResourceType(ResourceType.Success)
 
-            val actualResource = syncCurrentWeatherUseCase(
+            val actualResource = syncWeatherInfoUseCase(
                 lat = -6.17,
                 lon = 106.8,
                 units = "metric"
@@ -41,11 +41,11 @@ class SyncCurrentWeatherUseCaseTest {
         }
 
     @Test
-    fun `Sync current weather resource should be error`() =
+    fun `Sync weather info resource should be error`() =
         runTest(UnconfinedTestDispatcher()) {
             weatherRepositoryFake.setResourceType(ResourceType.Error)
 
-            val actualResource = syncCurrentWeatherUseCase(
+            val actualResource = syncWeatherInfoUseCase(
                 lat = -6.17,
                 lon = 106.8,
                 units = "metric"

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherRepository {
     fun getWeatherInfo(): Flow<WeatherInfo>
 
-    fun syncCurrentWeather(
+    fun syncWeatherInfo(
         lat: Double,
         lon: Double,
         units: String?

@@ -1,7 +1,7 @@
 package com.ajailani.weather_forecaster.viewmodel
 
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
-import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.TestCoroutineRule
@@ -29,7 +29,7 @@ class HomeViewModelTest {
     private lateinit var getWeatherInfoUseCase: GetWeatherInfoUseCase
 
     @Mock
-    private lateinit var syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
+    private lateinit var syncWeatherInfoUseCase: SyncWeatherInfoUseCase
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -40,7 +40,7 @@ class HomeViewModelTest {
 
             doReturn(resource).`when`(getWeatherInfoUseCase)()
 
-            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
+            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 
             val weatherInfo = homeViewModel.homeUiState.weatherInfo
 
@@ -49,17 +49,17 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `Sync current weather should be success`() {
+    fun `Sync weather info should be success`() {
         testCoroutineRule.runTest {
             val resource = flowOf(Resource.Success(Any()))
 
-            doReturn(resource).`when`(syncCurrentWeatherUseCase)(
+            doReturn(resource).`when`(syncWeatherInfoUseCase)(
                 lat = anyDouble(),
                 lon = anyDouble(),
                 units = anyString()
             )
 
-            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
+            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 
             val errorMessage = homeViewModel.homeUiState.errorMessage
 
@@ -68,8 +68,8 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `Sync current weather should be fail`() {
-        homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncCurrentWeatherUseCase)
+    fun `Sync weather info should be fail`() {
+        homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 
         val errorMessage = homeViewModel.homeUiState.errorMessage
 

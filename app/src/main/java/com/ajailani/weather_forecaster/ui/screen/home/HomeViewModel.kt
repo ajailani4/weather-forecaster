@@ -6,21 +6,21 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
-import com.ajailani.weather_forecaster.domain.use_case.SyncCurrentWeatherUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getWeatherInfoUseCase: GetWeatherInfoUseCase,
-    private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase
+    private val syncWeatherInfoUseCase: SyncWeatherInfoUseCase
 ) : ViewModel() {
     var homeUiState by mutableStateOf(HomeUiState())
         private set
 
     init {
         getWeatherInfo()
-        syncCurrentWeather()
+        syncWeatherInfo()
     }
 
     private fun getWeatherInfo() {
@@ -33,9 +33,9 @@ class HomeViewModel(
         }
     }
 
-    private fun syncCurrentWeather() {
+    private fun syncWeatherInfo() {
         viewModelScope.launch {
-            syncCurrentWeatherUseCase(
+            syncWeatherInfoUseCase(
                 lat = -6.1753942,
                 lon = 106.827183,
                 units = "metric"
