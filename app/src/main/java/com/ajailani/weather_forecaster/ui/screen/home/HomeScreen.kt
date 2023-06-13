@@ -32,129 +32,148 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.ajailani.weather_forecaster.R
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeScreen(
+    onEvent: (HomeEvent) -> Unit,
     homeUiState: HomeUiState
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = homeUiState.isRefreshing),
+        onRefresh = {
+            onEvent(HomeEvent.OnSwipeRefresh(true))
+            onEvent(HomeEvent.SyncWeatherInfo)
+        },
+        indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = trigger,
+                contentColor = MaterialTheme.colorScheme.primary
+            )
+        }
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-            Row {
-                Icon(
-                    imageVector = Icons.Outlined.LocationOn,
-                    contentDescription = "Location icon"
-                )
-                Spacer(modifier = Modifier.width(3.dp))
-                Text(
-                    text = "Jakarta",
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Spacer(modifier = Modifier.height(30.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row {
+                    Icon(
+                        imageVector = Icons.Outlined.LocationOn,
+                        contentDescription = "Location icon"
+                    )
+                    Spacer(modifier = Modifier.width(3.dp))
+                    Text(
+                        text = "Jakarta",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+                Spacer(modifier = Modifier.height(30.dp))
 
-            homeUiState.apply {
-                when {
-                    weatherInfo != null -> {
-                        val weatherComposition by rememberLottieComposition(
-                            LottieCompositionSpec.RawRes(
-                                when (weatherInfo.weathers[0].main) {
-                                    "Thunderstorm" -> R.raw.weather_thunderstorm
-                                    "Drizzle" -> R.raw.weather_drizzle
-                                    "Rain" -> R.raw.weather_rain
-                                    "Snow" -> R.raw.weather_snow
-                                    "Clear" -> R.raw.weather_clear
-                                    "Clouds" -> R.raw.weather_clouds
-                                    else  -> R.raw.weather_atmosphere
-                                }
-                            )
-                        )
-                        val progress by animateLottieCompositionAsState(
-                            composition = weatherComposition,
-                            iterations = LottieConstants.IterateForever
-                        )
-
-                        LottieAnimation(
-                            composition = weatherComposition,
-                            progress = { progress }
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Row {
-                            Text(
-                                text = "${weatherInfo.main.temp}",
-                                style = MaterialTheme.typography.displayLarge.copy(
-                                    fontSize = 80.sp
+                homeUiState.apply {
+                    when {
+                        weatherInfo != null -> {
+                            val weatherComposition by rememberLottieComposition(
+                                LottieCompositionSpec.RawRes(
+                                    when (weatherInfo.weathers[0].main) {
+                                        "Thunderstorm" -> R.raw.weather_thunderstorm
+                                        "Drizzle" -> R.raw.weather_drizzle
+                                        "Rain" -> R.raw.weather_rain
+                                        "Snow" -> R.raw.weather_snow
+                                        "Clear" -> R.raw.weather_clear
+                                        "Clouds" -> R.raw.weather_clouds
+                                        else -> R.raw.weather_atmosphere
+                                    }
                                 )
                             )
-                            Text(
-                                text = "°C",
-                                style = MaterialTheme.typography.titleLarge
+                            val progress by animateLottieCompositionAsState(
+                                composition = weatherComposition,
+                                iterations = LottieConstants.IterateForever
                             )
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = weatherInfo.weathers[0].main,
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Text(
-                            text = weatherInfo.weathers[0].description.replaceFirstChar(Char::titlecase),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Spacer(modifier = Modifier.height(40.dp))
-                        Card(modifier = Modifier.fillMaxWidth()) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp),
-                                horizontalArrangement = Arrangement.SpaceAround
-                            ) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.WaterDrop,
-                                        contentDescription = "Humidity icon"
+
+                            LottieAnimation(
+                                composition = weatherComposition,
+                                progress = { progress }
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Row {
+                                Text(
+                                    text = "${weatherInfo.main.temp}",
+                                    style = MaterialTheme.typography.displayLarge.copy(
+                                        fontSize = 80.sp
                                     )
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(text = "${weatherInfo.main.humidity}")
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(
-                                        text = "Humidity",
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
-                                }
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Thermostat,
-                                        contentDescription = "Feels like icon"
-                                    )
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(text = "${weatherInfo.main.feelsLike} °C")
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(
-                                        text = "Feels like",
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
-                                }
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Air,
-                                        contentDescription = "Wind icon"
-                                    )
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(text = "${weatherInfo.wind.speed} km/h")
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(
-                                        text = "Wind",
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
+                                )
+                                Text(
+                                    text = "°C",
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = weatherInfo.weathers[0].main,
+                                style = MaterialTheme.typography.headlineMedium
+                            )
+                            Spacer(modifier = Modifier.height(5.dp))
+                            Text(
+                                text = weatherInfo.weathers[0].description.replaceFirstChar(Char::titlecase),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Spacer(modifier = Modifier.height(40.dp))
+                            Card(modifier = Modifier.fillMaxWidth()) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(20.dp),
+                                    horizontalArrangement = Arrangement.SpaceAround
+                                ) {
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.WaterDrop,
+                                            contentDescription = "Humidity icon"
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(text = "${weatherInfo.main.humidity}")
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(
+                                            text = "Humidity",
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+                                    }
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Thermostat,
+                                            contentDescription = "Feels like icon"
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(text = "${weatherInfo.main.feelsLike} °C")
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(
+                                            text = "Feels like",
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+                                    }
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Air,
+                                            contentDescription = "Wind icon"
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(text = "${weatherInfo.wind.speed} km/h")
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        Text(
+                                            text = "Wind",
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+                                    }
                                 }
                             }
                         }

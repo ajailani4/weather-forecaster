@@ -23,6 +23,14 @@ class HomeViewModel(
         syncWeatherInfo()
     }
 
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            HomeEvent.SyncWeatherInfo -> syncWeatherInfo()
+
+            is HomeEvent.OnSwipeRefresh -> homeUiState = homeUiState.copy(isRefreshing = true)
+        }
+    }
+
     private fun getWeatherInfo() {
         viewModelScope.launch {
             getWeatherInfoUseCase().catch {
@@ -40,15 +48,24 @@ class HomeViewModel(
                 lon = 106.827183,
                 units = "metric"
             ).catch {
-                homeUiState = homeUiState.copy(errorMessage = it.message)
+                homeUiState = homeUiState.copy(
+                    isRefreshing = false,
+                    errorMessage = it.message
+                )
             }.collect {
                 homeUiState = when (it) {
                     is Resource.Success -> {
-                        homeUiState.copy(errorMessage = null)
+                        homeUiState.copy(
+                            isRefreshing = false,
+                            errorMessage = null
+                        )
                     }
 
                     is Resource.Error -> {
-                        homeUiState.copy(errorMessage = it.message)
+                        homeUiState.copy(
+                            isRefreshing = false,
+                            errorMessage = it.message
+                        )
                     }
                 }
             }

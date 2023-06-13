@@ -25,9 +25,13 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val homeViewModel = koinViewModel<HomeViewModel>()
+                    val onEvent = homeViewModel::onEvent
                     val homeUiState = homeViewModel.homeUiState
 
-                    HomeScreen(homeUiState)
+                    HomeScreen(
+                        onEvent = onEvent,
+                        homeUiState = homeUiState
+                    )
                 }
             }
         }
