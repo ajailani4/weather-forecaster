@@ -29,7 +29,11 @@ fun LocationItem(
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "${location.state}, ${location.country}",
+                text = if (location.state != null) {
+                    "${location.state}, ${location.country}"
+                } else {
+                    location.country
+                },
                 style = MaterialTheme.typography.bodyMedium
             )
         }
