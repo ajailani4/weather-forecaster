@@ -11,9 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ajailani.weather_forecaster.domain.model.Location
 
 @Composable
-fun LocationItem() {
+fun LocationItem(
+    location: Location
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -21,12 +24,12 @@ fun LocationItem() {
     ) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
             Text(
-                text = "Bengkulu",
+                text = location.name,
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "Bengkulu, Indonesia",
+                text = "${location.state}, ${location.country}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }

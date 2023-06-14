@@ -50,8 +50,10 @@ class SearchLocationViewModelTestDto {
             onEvent(SearchLocationEvent.GetLocations)
 
             val locations = searchLocationViewModel.searchLocationUiState.locations
+            val errorMessage = searchLocationViewModel.searchLocationUiState.errorMessage
 
             assertEquals("Locations size should be 2", 2, locations.size)
+            assertEquals("Error message should be null", null, errorMessage)
         }
     }
 

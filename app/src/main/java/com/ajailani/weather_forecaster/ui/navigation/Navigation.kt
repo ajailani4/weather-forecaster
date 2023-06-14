@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.ajailani.weather_forecaster.ui.screen.home.HomeScreen
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationScreen
+import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -27,7 +28,14 @@ fun Navigation(
         }
 
         composable(Screen.SearchLocationScreen.route) {
-            SearchLocationScreen()
+            val searchLocationViewModel = koinViewModel<SearchLocationViewModel>()
+            val onEvent = searchLocationViewModel::onEvent
+            val searchLocationUiState = searchLocationViewModel.searchLocationUiState
+
+            SearchLocationScreen(
+                onEvent = onEvent,
+                searchLocationUiState = searchLocationUiState
+            )
         }
     }
 }

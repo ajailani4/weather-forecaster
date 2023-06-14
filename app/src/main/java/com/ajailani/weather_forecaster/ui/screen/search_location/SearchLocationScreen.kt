@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.ui.screen.search_location
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +34,10 @@ import com.ajailani.weather_forecaster.ui.screen.search_location.component.Searc
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchLocationScreen() {
+fun SearchLocationScreen(
+    onEvent: (SearchLocationEvent) -> Unit,
+    searchLocationUiState: SearchLocationUiState
+) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -50,17 +57,42 @@ fun SearchLocationScreen() {
                     )
                 }
                 Spacer(modifier = Modifier.width(13.dp))
-                SearchTextField(value = "", onValueChange = {})
+                SearchTextField(
+                    value = searchLocationUiState.query,
+                    onValueChange = { onEvent(SearchLocationEvent.OnQueryChanged(it)) },
+                    onSearch = { onEvent(SearchLocationEvent.GetLocations) }
+                )
             }
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            items(10) {
-                LocationItem()
+        searchLocationUiState.apply {
+            when {
+                loading == true -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                loading == false && errorMessage == null -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        items(locations) {
+                            LocationItem(it)
+                        }
+                    }
+                }
+
+                errorMessage != null -> {
+                    LaunchedEffect(snackbarHostState) {
+                        snackbarHostState.showSnackbar(errorMessage)
+                    }
+                }
             }
         }
     }

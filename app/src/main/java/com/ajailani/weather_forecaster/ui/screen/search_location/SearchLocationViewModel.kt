@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.ajailani.weather_forecaster.domain.use_case.GetLocationsUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SearchLocationViewModel(
@@ -20,6 +19,10 @@ class SearchLocationViewModel(
     fun onEvent(event: SearchLocationEvent) {
         when (event) {
             SearchLocationEvent.GetLocations -> getLocations()
+
+            is SearchLocationEvent.OnQueryChanged -> {
+                searchLocationUiState = searchLocationUiState.copy(query = event.query)
+            }
         }
     }
 
@@ -37,7 +40,8 @@ class SearchLocationViewModel(
                     is Resource.Success -> {
                         searchLocationUiState.copy(
                             loading = false,
-                            locations = it.data ?: emptyList()
+                            locations = it.data ?: emptyList(),
+                            errorMessage = null
                         )
                     }
 
