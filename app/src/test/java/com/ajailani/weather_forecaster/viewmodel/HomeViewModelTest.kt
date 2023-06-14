@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.viewmodel
 
+import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
@@ -69,6 +70,14 @@ class HomeViewModelTest {
 
     @Test
     fun `Sync weather info should be fail`() {
+        val resource = flowOf(Resource.Error<Any>("Error"))
+
+        doReturn(resource).`when`(syncWeatherInfoUseCase)(
+            lat = anyDouble(),
+            lon = anyDouble(),
+            units = anyString()
+        )
+
         homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 
         val errorMessage = homeViewModel.homeUiState.errorMessage
