@@ -3,6 +3,7 @@ package com.ajailani.weather_forecaster.domain.repository
 import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.ResourceType
+import com.ajailani.weather_forecaster.util.dummyLocations
 import com.ajailani.weather_forecaster.util.dummyWeatherInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -23,9 +24,12 @@ class WeatherRepositoryFake : WeatherRepository {
             ResourceType.Error -> flowOf(Resource.Error())
         }
 
-    override fun getLocations(query: String): Flow<Resource<List<Location>>> {
-        TODO("Not yet implemented")
-    }
+    override fun getLocations(query: String): Flow<Resource<List<Location>>> =
+        when (resourceType) {
+            ResourceType.Success -> flowOf(Resource.Success(dummyLocations))
+
+            ResourceType.Error -> flowOf(Resource.Error())
+        }
 
     fun setResourceType(type: ResourceType) {
         resourceType = type
