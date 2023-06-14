@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.ajailani.weather_forecaster.ui.navigation.Navigation
+import com.ajailani.weather_forecaster.ui.navigation.Screen
 import com.ajailani.weather_forecaster.ui.screen.home.HomeScreen
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.ui.theme.WeatherForecasterTheme
@@ -24,13 +27,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val homeViewModel = koinViewModel<HomeViewModel>()
-                    val onEvent = homeViewModel::onEvent
-                    val homeUiState = homeViewModel.homeUiState
+                    val navController = rememberNavController()
 
-                    HomeScreen(
-                        onEvent = onEvent,
-                        homeUiState = homeUiState
+                    Navigation(
+                        navController = navController,
+                        startDestination = Screen.HomeScreen.route
                     )
                 }
             }
