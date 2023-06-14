@@ -12,4 +12,6 @@ class WeatherRemoteDataSource(private val weatherService: WeatherService) {
         lon = lon,
         units = units
     )
+
+    suspend fun getLocations(query: String) = weatherService.getLocations(query)
 }

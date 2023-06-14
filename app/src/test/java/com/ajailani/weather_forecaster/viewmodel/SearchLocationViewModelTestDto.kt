@@ -23,7 +23,7 @@ import org.mockito.kotlin.doReturn
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class SearchLocationViewModelTest {
+class SearchLocationViewModelTestDto {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

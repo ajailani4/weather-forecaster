@@ -1,4 +1,4 @@
-package com.ajailani.weather_forecaster.data.local
+package com.ajailani.weather_forecaster.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

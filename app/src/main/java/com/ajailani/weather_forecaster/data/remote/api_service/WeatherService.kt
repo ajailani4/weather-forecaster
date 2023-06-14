@@ -21,4 +21,12 @@ class WeatherService(private val httpClient: HttpClient) {
             parameters.append("appid", BuildConfig.API_KEY)
         }
     }
+
+    suspend fun getLocations(query: String) = httpClient.get("geo/1.0/direct") {
+        url {
+            parameters.append("q", query)
+            parameters.append("limit", "5")
+            parameters.append("appid", BuildConfig.API_KEY)
+        }
+    }
 }
