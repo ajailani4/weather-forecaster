@@ -5,6 +5,7 @@ import com.ajailani.weather_forecaster.data.mapper.toWeatherInfo
 import com.ajailani.weather_forecaster.data.mapper.toWeatherInfoEntity
 import com.ajailani.weather_forecaster.data.remote.data_source.WeatherRemoteDataSource
 import com.ajailani.weather_forecaster.data.remote.dto.WeatherInfoDto
+import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
@@ -49,4 +50,8 @@ class WeatherRepositoryImpl(
                 else -> emit(Resource.Error("Sorry, something wrong happened"))
             }
         }
+
+    override fun getLocations(query: String): Flow<Resource<List<Location>>> {
+        TODO("Not yet implemented")
+    }
 }

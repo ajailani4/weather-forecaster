@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.domain.repository
 
+import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.util.Resource
 import com.ajailani.weather_forecaster.util.ResourceType
 import com.ajailani.weather_forecaster.util.dummyWeatherInfo
@@ -21,6 +22,10 @@ class WeatherRepositoryFake : WeatherRepository {
 
             ResourceType.Error -> flowOf(Resource.Error())
         }
+
+    override fun getLocations(query: String): Flow<Resource<List<Location>>> {
+        TODO("Not yet implemented")
+    }
 
     fun setResourceType(type: ResourceType) {
         resourceType = type

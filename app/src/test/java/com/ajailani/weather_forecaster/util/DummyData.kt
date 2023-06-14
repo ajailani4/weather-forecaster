@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.util
 
+import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.domain.model.Weather
 import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.model.WeatherMain
@@ -22,3 +23,13 @@ val dummyWeatherInfo = WeatherInfo(
         speed = 7
     )
 )
+
+val dummyLocation = Location(
+    name = "Bengkulu",
+    lat = -6.17,
+    lon = 106.82,
+    country = "ID",
+    state = "Bengkulu"
+)
+
+val dummyLocations = listOf(dummyLocation, dummyLocation)
