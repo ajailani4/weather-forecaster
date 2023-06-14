@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
                     Navigation(
                         navController = navController,
-                        startDestination = Screen.HomeScreen.route
+                        startDestination = Screen.SearchLocationScreen.route
                     )
                 }
             }

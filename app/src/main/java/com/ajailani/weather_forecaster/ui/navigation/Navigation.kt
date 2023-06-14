@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ajailani.weather_forecaster.ui.screen.home.HomeScreen
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
+import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -26,7 +27,7 @@ fun Navigation(
         }
 
         composable(Screen.SearchLocationScreen.route) {
-
+            SearchLocationScreen()
         }
     }
 }
