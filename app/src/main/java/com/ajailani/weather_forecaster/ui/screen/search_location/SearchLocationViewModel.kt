@@ -5,13 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.domain.use_case.GetLocationsUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SaveLocationUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class SearchLocationViewModel(
-    private val getLocationsUseCase: GetLocationsUseCase
+    private val getLocationsUseCase: GetLocationsUseCase,
+    private val saveLocationUseCase: SaveLocationUseCase
 ) : ViewModel() {
     var searchLocationUiState by mutableStateOf(SearchLocationUiState())
         private set
@@ -23,6 +26,8 @@ class SearchLocationViewModel(
             is SearchLocationEvent.OnQueryChanged -> {
                 searchLocationUiState = searchLocationUiState.copy(query = event.query)
             }
+
+            is SearchLocationEvent.SaveLocation -> saveLocation(event.location)
         }
     }
 
@@ -53,6 +58,12 @@ class SearchLocationViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun saveLocation(location: Location) {
+        viewModelScope.launch {
+            saveLocationUseCase(location)
         }
     }
 }

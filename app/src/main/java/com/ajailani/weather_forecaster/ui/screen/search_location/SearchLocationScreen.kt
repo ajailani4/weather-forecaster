@@ -38,7 +38,8 @@ import com.ajailani.weather_forecaster.ui.screen.search_location.component.Searc
 @Composable
 fun SearchLocationScreen(
     onEvent: (SearchLocationEvent) -> Unit,
-    searchLocationUiState: SearchLocationUiState
+    searchLocationUiState: SearchLocationUiState,
+    onNavigateToHome: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -70,24 +71,18 @@ fun SearchLocationScreen(
         searchLocationUiState.apply {
             when {
                 !loading && errorMessage == null -> {
-                    if (locations.isNotEmpty()) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(innerPadding)
-                        ) {
-                            items(locations) {
-                                LocationItem(it)
-                            }
-                        }
-                    } else {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Location is not found",
-                                style = MaterialTheme.typography.labelLarge
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        items(locations) {
+                            LocationItem(
+                                location = it,
+                                onClick = {
+                                    onEvent(SearchLocationEvent.SaveLocation(it))
+                                    onNavigateToHome()
+                                }
                             )
                         }
                     }

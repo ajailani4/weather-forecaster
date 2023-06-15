@@ -8,6 +8,7 @@ import com.ajailani.weather_forecaster.data.mapper.toWeatherInfoEntity
 import com.ajailani.weather_forecaster.data.remote.data_source.WeatherRemoteDataSource
 import com.ajailani.weather_forecaster.data.remote.dto.LocationDto
 import com.ajailani.weather_forecaster.data.remote.dto.WeatherInfoDto
+import com.ajailani.weather_forecaster.domain.model.Location
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
@@ -69,6 +70,10 @@ class WeatherRepositoryImpl(
                 else -> emit(Resource.Error("Sorry, something wrong happened"))
             }
         }
+
+    override suspend fun saveLocation(location: Location) {
+        preferencesDataStore.saveLocation(location)
+    }
 
     override fun getLocationName() = preferencesDataStore.getLocationName()
 }

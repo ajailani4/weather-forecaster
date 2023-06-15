@@ -12,5 +12,7 @@ interface WeatherRepository {
 
     fun getLocations(query: String): Flow<Resource<List<Location>>>
 
+    suspend fun saveLocation(location: Location)
+
     fun getLocationName(): Flow<String>
 }

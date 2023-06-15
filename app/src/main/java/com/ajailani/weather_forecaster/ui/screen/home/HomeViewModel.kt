@@ -29,8 +29,9 @@ class HomeViewModel(
 
     private fun getLocationName() {
         viewModelScope.launch {
-            val locationName = getLocationNameUseCase().first()
-            homeUiState = homeUiState.copy(locationName = locationName)
+            getLocationNameUseCase().collect {
+                homeUiState = homeUiState.copy(locationName = it)
+            }
         }
     }
 

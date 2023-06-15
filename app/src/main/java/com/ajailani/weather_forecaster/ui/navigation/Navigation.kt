@@ -34,7 +34,10 @@ fun Navigation(
 
             SearchLocationScreen(
                 onEvent = onEvent,
-                searchLocationUiState = searchLocationUiState
+                searchLocationUiState = searchLocationUiState,
+                onNavigateToHome = {
+                    navController.navigate(Screen.Home.route)
+                }
             )
         }
     }

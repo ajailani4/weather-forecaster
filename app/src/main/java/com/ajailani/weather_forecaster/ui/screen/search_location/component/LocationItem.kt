@@ -15,12 +15,13 @@ import com.ajailani.weather_forecaster.domain.model.Location
 
 @Composable
 fun LocationItem(
-    location: Location
+    location: Location,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
             Text(
