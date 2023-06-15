@@ -2,6 +2,7 @@ package com.ajailani.weather_forecaster.viewmodel
 
 import android.location.Location
 import com.ajailani.weather_forecaster.domain.use_case.GetLocationsUseCase
+import com.ajailani.weather_forecaster.domain.use_case.SaveLocationUseCase
 import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationEvent
 import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationViewModel
 import com.ajailani.weather_forecaster.util.Resource
@@ -30,13 +31,16 @@ class SearchLocationViewModelTestDto {
     @Mock
     private lateinit var getLocationsUseCase: GetLocationsUseCase
 
+    @Mock
+    private lateinit var saveLocationUseCase: SaveLocationUseCase
+
     private lateinit var searchLocationViewModel: SearchLocationViewModel
 
     private lateinit var onEvent: (SearchLocationEvent) -> Unit
 
     @Before
     fun setUp() {
-        searchLocationViewModel = SearchLocationViewModel(getLocationsUseCase)
+        searchLocationViewModel = SearchLocationViewModel(getLocationsUseCase, saveLocationUseCase)
         onEvent = searchLocationViewModel::onEvent
     }
 
