@@ -70,7 +70,5 @@ class WeatherRepositoryImpl(
             }
         }
 
-    override fun getLocationName(): Flow<String> {
-        TODO("Not yet implemented")
-    }
+    override fun getLocationName() = preferencesDataStore.getLocationName()
 }
