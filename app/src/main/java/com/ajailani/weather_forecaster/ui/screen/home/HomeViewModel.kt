@@ -5,13 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ajailani.weather_forecaster.domain.use_case.GetLocationNameUseCase
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
+    private val getLocationNameUseCase: GetLocationNameUseCase,
     private val getWeatherInfoUseCase: GetWeatherInfoUseCase,
     private val syncWeatherInfoUseCase: SyncWeatherInfoUseCase
 ) : ViewModel() {
@@ -19,8 +22,16 @@ class HomeViewModel(
         private set
 
     init {
+        getLocationName()
         getWeatherInfo()
         syncWeatherInfo()
+    }
+
+    private fun getLocationName() {
+        viewModelScope.launch {
+            val locationName = getLocationNameUseCase().first()
+            homeUiState = homeUiState.copy(locationName = locationName)
+        }
     }
 
     fun onEvent(event: HomeEvent) {

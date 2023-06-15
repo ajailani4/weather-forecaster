@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.viewmodel
 
+import com.ajailani.weather_forecaster.domain.use_case.GetLocationNameUseCase
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
@@ -25,6 +26,9 @@ class HomeViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
+    private lateinit var getLocationNameUseCase: GetLocationNameUseCase
+
+    @Mock
     private lateinit var getWeatherInfoUseCase: GetWeatherInfoUseCase
 
     @Mock
@@ -33,13 +37,34 @@ class HomeViewModelTest {
     private lateinit var homeViewModel: HomeViewModel
 
     @Test
+    fun `Get location name should return a string`() {
+        testCoroutineRule.runTest {
+            doReturn(flowOf("Bengkulu")).`when`(getLocationNameUseCase)()
+
+            homeViewModel = HomeViewModel(
+                getLocationNameUseCase,
+                getWeatherInfoUseCase,
+                syncWeatherInfoUseCase
+            )
+
+            val locationName = homeViewModel.homeUiState.locationName
+
+            assertEquals("Location name should be 'Bengkulu'", "Bengkulu", locationName)
+        }
+    }
+
+    @Test
     fun `Get weather info should be success`() {
         testCoroutineRule.runTest {
             val resource = flowOf(dummyWeatherInfo)
 
             doReturn(resource).`when`(getWeatherInfoUseCase)()
 
-            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
+            homeViewModel = HomeViewModel(
+                getLocationNameUseCase,
+                getWeatherInfoUseCase,
+                syncWeatherInfoUseCase
+            )
 
             val weatherInfo = homeViewModel.homeUiState.weatherInfo
 
@@ -54,7 +79,11 @@ class HomeViewModelTest {
 
             doReturn(resource).`when`(syncWeatherInfoUseCase)(anyString())
 
-            homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
+            homeViewModel = HomeViewModel(
+                getLocationNameUseCase,
+                getWeatherInfoUseCase,
+                syncWeatherInfoUseCase
+            )
 
             val errorMessage = homeViewModel.homeUiState.errorMessage
 
@@ -68,7 +97,11 @@ class HomeViewModelTest {
 
         doReturn(resource).`when`(syncWeatherInfoUseCase)(anyString())
 
-        homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
+        homeViewModel = HomeViewModel(
+            getLocationNameUseCase,
+            getWeatherInfoUseCase,
+            syncWeatherInfoUseCase
+        )
 
         val errorMessage = homeViewModel.homeUiState.errorMessage
 

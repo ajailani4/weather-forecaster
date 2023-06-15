@@ -11,4 +11,6 @@ interface WeatherRepository {
     fun syncWeatherInfo(units: String?): Flow<Resource<Any>>
 
     fun getLocations(query: String): Flow<Resource<List<Location>>>
+
+    fun getLocationName(): Flow<String>
 }

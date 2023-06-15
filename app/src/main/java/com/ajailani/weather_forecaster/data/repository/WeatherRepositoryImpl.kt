@@ -12,6 +12,7 @@ import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -68,4 +69,8 @@ class WeatherRepositoryImpl(
                 else -> emit(Resource.Error("Sorry, something wrong happened"))
             }
         }
+
+    override fun getLocationName(): Flow<String> {
+        TODO("Not yet implemented")
+    }
 }
