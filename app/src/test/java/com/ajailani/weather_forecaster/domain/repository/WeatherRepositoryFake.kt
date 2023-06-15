@@ -27,9 +27,7 @@ class WeatherRepositoryFake : WeatherRepository {
             ResourceType.Error -> flowOf(Resource.Error())
         }
 
-    override fun getLocationName(): Flow<String> {
-        TODO("Not yet implemented")
-    }
+    override fun getLocationName() = flowOf("Bengkulu")
 
     fun setResourceType(type: ResourceType) {
         resourceType = type
