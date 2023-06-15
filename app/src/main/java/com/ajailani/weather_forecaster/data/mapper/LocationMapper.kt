@@ -9,6 +9,6 @@ fun LocationDto.toLocation() =
         name = name,
         lat = lat,
         lon = lon,
-        country = Locale("", country).displayCountry,
+        country = country,
         state = state
     )

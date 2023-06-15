@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ajailani.weather_forecaster.domain.model.Location
+import com.ajailani.weather_forecaster.util.toCountryName
 
 @Composable
 fun LocationItem(
@@ -31,9 +32,9 @@ fun LocationItem(
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = if (location.state != null) {
-                    "${location.state}, ${location.country}"
+                    "${location.state}, ${location.country.toCountryName()}"
                 } else {
-                    location.country
+                    location.country.toCountryName()
                 },
                 style = MaterialTheme.typography.bodyMedium
             )
