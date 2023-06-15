@@ -120,7 +120,7 @@ fun HomeScreen(
                                 Spacer(modifier = Modifier.height(20.dp))
                                 Row {
                                     Text(
-                                        text = "${weatherInfo.main.temp}",
+                                        text = "${weatherInfo.main.temp?.toInt()}",
                                         style = MaterialTheme.typography.displayLarge.copy(
                                             fontSize = 80.sp
                                         )
@@ -167,7 +167,7 @@ fun HomeScreen(
                                                 contentDescription = "Feels like icon"
                                             )
                                             Spacer(modifier = Modifier.height(5.dp))
-                                            Text(text = "${weatherInfo.main.feelsLike} °C")
+                                            Text(text = "${weatherInfo.main.feelsLike?.toInt()} °C")
                                             Spacer(modifier = Modifier.height(5.dp))
                                             Text(
                                                 text = "Feels like",
@@ -180,7 +180,7 @@ fun HomeScreen(
                                                 contentDescription = "Wind icon"
                                             )
                                             Spacer(modifier = Modifier.height(5.dp))
-                                            Text(text = "${weatherInfo.wind.speed} km/h")
+                                            Text(text = "${weatherInfo.wind.speed?.toInt()} km/h")
                                             Spacer(modifier = Modifier.height(5.dp))
                                             Text(
                                                 text = "Wind",

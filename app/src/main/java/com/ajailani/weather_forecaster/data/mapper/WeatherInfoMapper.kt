@@ -10,30 +10,6 @@ import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.model.WeatherMain
 import com.ajailani.weather_forecaster.domain.model.WeatherWind
 
-fun WeatherInfoDto.toWeatherInfo() =
-    WeatherInfo(
-        weathers = weathersDto.map { it.toWeather() },
-        main = mainDto.toWeatherMain(),
-        wind = windDto.toWeatherWind()
-    )
-
-fun WeatherDto.toWeather() =
-    Weather(
-        id = id,
-        main = main,
-        description = description
-    )
-
-fun WeatherMainDto.toWeatherMain() =
-    WeatherMain(
-        temp = temp?.toInt(),
-        feelsLike = feelsLike?.toInt(),
-        humidity = humidity
-    )
-
-fun WeatherWindDto.toWeatherWind() =
-    WeatherWind(speed?.toInt())
-
 fun WeatherInfoDto.toWeatherInfoEntity() =
     WeatherInfoEntity(
         main = weathersDto[0].main,
@@ -48,15 +24,15 @@ fun WeatherInfoEntity.toWeatherInfo() =
     WeatherInfo(
         weathers = listOf(
             Weather(
-                id = id!!,
+                id = id,
                 main = main,
                 description = description
             )
         ),
         main = WeatherMain(
-            temp = temp?.toInt(),
-            feelsLike = feelsLike?.toInt(),
+            temp = temp,
+            feelsLike = feelsLike,
             humidity = humidity
         ),
-        wind = WeatherWind(speed?.toInt())
+        wind = WeatherWind(speed)
     )

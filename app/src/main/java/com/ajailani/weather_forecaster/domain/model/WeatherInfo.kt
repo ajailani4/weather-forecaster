@@ -13,11 +13,11 @@ data class Weather(
 )
 
 data class WeatherMain(
-    val temp: Int? = null,
-    val feelsLike: Int? = null,
+    val temp: Float? = null,
+    val feelsLike: Float? = null,
     val humidity: Int? = null
 )
 
 data class WeatherWind(
-    val speed: Int? = null
+    val speed: Float? = null
 )
