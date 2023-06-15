@@ -14,8 +14,6 @@ import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
@@ -30,26 +28,28 @@ class WeatherRepositoryImpl(
     override fun syncWeatherInfo(units: String?): Flow<Resource<Any>> =
         flow {
             preferencesDataStore.getLocationCoordinates().collect {
-                val response = weatherRemoteDataSource.getCurrentWeather(
-                    lat = it.split(",")[0].toDouble(),
-                    lon = it.split(",")[1].toDouble(),
-                    units = units
-                )
+                if (it.isNotEmpty()) {
+                    val response = weatherRemoteDataSource.getCurrentWeather(
+                        lat = it.split(",")[0].toDouble(),
+                        lon = it.split(",")[1].toDouble(),
+                        units = units
+                    )
 
-                when (response.status) {
-                    HttpStatusCode.OK -> {
-                        val weatherInfoDto = response.body<WeatherInfoDto>()
+                    when (response.status) {
+                        HttpStatusCode.OK -> {
+                            val weatherInfoDto = response.body<WeatherInfoDto>()
 
-                        weatherLocalDataSource.insertWeatherInfo(weatherInfoDto.toWeatherInfoEntity())
+                            weatherLocalDataSource.insertWeatherInfo(weatherInfoDto.toWeatherInfoEntity())
 
-                        emit(Resource.Success(Any()))
+                            emit(Resource.Success(Any()))
+                        }
+
+                        HttpStatusCode.InternalServerError -> {
+                            emit(Resource.Error("Server error"))
+                        }
+
+                        else -> emit(Resource.Error("Sorry, something wrong happened"))
                     }
-
-                    HttpStatusCode.InternalServerError -> {
-                        emit(Resource.Error("Server error"))
-                    }
-
-                    else -> emit(Resource.Error("Sorry, something wrong happened"))
                 }
             }
         }
