@@ -8,11 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherRepository {
     fun getWeatherInfo(): Flow<WeatherInfo?>
 
-    fun syncWeatherInfo(
-        lat: Double,
-        lon: Double,
-        units: String?
-    ): Flow<Resource<Any>>
+    fun syncWeatherInfo(units: String?): Flow<Resource<Any>>
 
     fun getLocations(query: String): Flow<Resource<List<Location>>>
 }

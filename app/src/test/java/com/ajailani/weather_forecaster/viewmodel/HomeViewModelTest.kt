@@ -1,6 +1,5 @@
 package com.ajailani.weather_forecaster.viewmodel
 
-import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
@@ -14,7 +13,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -54,11 +52,7 @@ class HomeViewModelTest {
         testCoroutineRule.runTest {
             val resource = flowOf(Resource.Success(Any()))
 
-            doReturn(resource).`when`(syncWeatherInfoUseCase)(
-                lat = anyDouble(),
-                lon = anyDouble(),
-                units = anyString()
-            )
+            doReturn(resource).`when`(syncWeatherInfoUseCase)(anyString())
 
             homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 
@@ -72,11 +66,7 @@ class HomeViewModelTest {
     fun `Sync weather info should be fail`() {
         val resource = flowOf(Resource.Error<Any>("Error"))
 
-        doReturn(resource).`when`(syncWeatherInfoUseCase)(
-            lat = anyDouble(),
-            lon = anyDouble(),
-            units = anyString()
-        )
+        doReturn(resource).`when`(syncWeatherInfoUseCase)(anyString())
 
         homeViewModel = HomeViewModel(getWeatherInfoUseCase, syncWeatherInfoUseCase)
 

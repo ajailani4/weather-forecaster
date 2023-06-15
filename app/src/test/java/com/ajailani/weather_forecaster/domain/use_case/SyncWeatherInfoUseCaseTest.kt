@@ -27,11 +27,7 @@ class SyncWeatherInfoUseCaseTest {
         runTest(UnconfinedTestDispatcher()) {
             weatherRepositoryFake.setResourceType(ResourceType.Success)
 
-            val actualResource = syncWeatherInfoUseCase(
-                lat = -6.17,
-                lon = 106.8,
-                units = "metric"
-            ).first()
+            val actualResource = syncWeatherInfoUseCase("metric").first()
 
             assertEquals(
                 "Resource should be success",
@@ -45,11 +41,7 @@ class SyncWeatherInfoUseCaseTest {
         runTest(UnconfinedTestDispatcher()) {
             weatherRepositoryFake.setResourceType(ResourceType.Error)
 
-            val actualResource = syncWeatherInfoUseCase(
-                lat = -6.17,
-                lon = 106.8,
-                units = "metric"
-            ).first()
+            val actualResource = syncWeatherInfoUseCase("metric").first()
 
             assertEquals(
                 "Resource should be error",

@@ -21,15 +21,11 @@ class WeatherRepositoryImpl(
     override fun getWeatherInfo() =
         weatherLocalDataSource.getWeatherInfo().map { it?.toWeatherInfo() }
 
-    override fun syncWeatherInfo(
-        lat: Double,
-        lon: Double,
-        units: String?
-    ) =
+    override fun syncWeatherInfo(units: String?) =
         flow {
             val response = weatherRemoteDataSource.getCurrentWeather(
-                lat = lat,
-                lon = lon,
+                lat = 0.0,
+                lon = 0.0,
                 units = units
             )
 

@@ -13,11 +13,7 @@ class WeatherRepositoryFake : WeatherRepository {
 
     override fun getWeatherInfo() = flowOf(dummyWeatherInfo)
 
-    override fun syncWeatherInfo(
-        lat: Double,
-        lon: Double,
-        units: String?
-    ): Flow<Resource<Any>> =
+    override fun syncWeatherInfo(units: String?): Flow<Resource<Any>> =
         when (resourceType) {
             ResourceType.Success -> flowOf(Resource.Success())
 

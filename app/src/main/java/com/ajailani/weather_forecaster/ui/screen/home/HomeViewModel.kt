@@ -43,11 +43,7 @@ class HomeViewModel(
 
     private fun syncWeatherInfo() {
         viewModelScope.launch {
-            syncWeatherInfoUseCase(
-                lat = -6.1753942,
-                lon = 106.827183,
-                units = "metric"
-            ).catch {
+            syncWeatherInfoUseCase("metric").catch {
                 homeUiState = homeUiState.copy(
                     isRefreshing = false,
                     errorMessage = it.message
