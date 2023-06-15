@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.data.repository
 
+import com.ajailani.weather_forecaster.data.local.PreferencesDataStore
 import com.ajailani.weather_forecaster.data.local.data_source.WeatherLocalDataSource
 import com.ajailani.weather_forecaster.data.mapper.toLocation
 import com.ajailani.weather_forecaster.data.mapper.toWeatherInfo
@@ -11,21 +12,25 @@ import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class WeatherRepositoryImpl(
     private val weatherLocalDataSource: WeatherLocalDataSource,
-    private val weatherRemoteDataSource: WeatherRemoteDataSource
+    private val weatherRemoteDataSource: WeatherRemoteDataSource,
+    private val preferencesDataStore: PreferencesDataStore
 ) : WeatherRepository {
     override fun getWeatherInfo() =
         weatherLocalDataSource.getWeatherInfo().map { it?.toWeatherInfo() }
 
     override fun syncWeatherInfo(units: String?) =
         flow {
+            val locationCoordinates = preferencesDataStore.getLocationCoordinates().first()
+
             val response = weatherRemoteDataSource.getCurrentWeather(
-                lat = 0.0,
-                lon = 0.0,
+                lat = locationCoordinates.split(",")[0].toDouble(),
+                lon = locationCoordinates.split(",")[1].toDouble(),
                 units = units
             )
 

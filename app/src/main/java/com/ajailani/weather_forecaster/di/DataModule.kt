@@ -1,6 +1,7 @@
 package com.ajailani.weather_forecaster.di
 
 import androidx.room.Room
+import com.ajailani.weather_forecaster.data.local.PreferencesDataStore
 import com.ajailani.weather_forecaster.data.local.database.WeatherDatabase
 import com.ajailani.weather_forecaster.data.local.data_source.WeatherLocalDataSource
 import com.ajailani.weather_forecaster.data.remote.api_service.WeatherService
@@ -26,9 +27,10 @@ val dataModule = module {
     single { get<WeatherDatabase>().weatherDao }
 
     // DataSource
+    single { PreferencesDataStore(androidContext()) }
     single { WeatherLocalDataSource(get()) }
     single { WeatherRemoteDataSource(get()) }
 
     // Repository
-    single<WeatherRepository> { WeatherRepositoryImpl(get(), get()) }
+    single<WeatherRepository> { WeatherRepositoryImpl(get(), get(), get()) }
 }
