@@ -69,16 +69,7 @@ fun SearchLocationScreen(
     ) { innerPadding ->
         searchLocationUiState.apply {
             when {
-                loading == true -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                loading == false && errorMessage == null -> {
+                !loading && errorMessage == null -> {
                     if (locations.isNotEmpty()) {
                         LazyColumn(
                             modifier = Modifier
@@ -99,6 +90,15 @@ fun SearchLocationScreen(
                                 style = MaterialTheme.typography.labelLarge
                             )
                         }
+                    }
+                }
+
+                loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
                 }
 
