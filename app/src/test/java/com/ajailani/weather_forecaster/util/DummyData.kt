@@ -15,12 +15,12 @@ val dummyWeatherInfo = WeatherInfo(
         )
     ),
     main = WeatherMain(
-        temp = 25,
-        feelsLike = 28,
+        temp = 25.0f,
+        feelsLike = 28.0f,
         humidity = 20
     ),
     wind = WeatherWind(
-        speed = 7
+        speed = 7.0f
     )
 )
 

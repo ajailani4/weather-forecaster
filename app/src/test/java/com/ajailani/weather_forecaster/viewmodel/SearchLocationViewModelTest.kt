@@ -10,7 +10,6 @@ import com.ajailani.weather_forecaster.util.TestCoroutineRule
 import com.ajailani.weather_forecaster.util.dummyLocations
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -24,7 +23,7 @@ import org.mockito.kotlin.doReturn
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class SearchLocationViewModelTestDto {
+class SearchLocationViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
