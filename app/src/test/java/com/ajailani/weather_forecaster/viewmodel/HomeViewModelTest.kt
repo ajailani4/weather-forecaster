@@ -58,6 +58,7 @@ class HomeViewModelTest {
         testCoroutineRule.runTest {
             val resource = flowOf(dummyWeatherInfo)
 
+            doReturn(flowOf("Bengkulu")).`when`(getLocationNameUseCase)()
             doReturn(resource).`when`(getWeatherInfoUseCase)()
 
             homeViewModel = HomeViewModel(
@@ -77,6 +78,7 @@ class HomeViewModelTest {
         testCoroutineRule.runTest {
             val resource = flowOf(Resource.Success(Any()))
 
+            doReturn(flowOf("Bengkulu")).`when`(getLocationNameUseCase)()
             doReturn(resource).`when`(syncWeatherInfoUseCase)(anyString())
 
             homeViewModel = HomeViewModel(
