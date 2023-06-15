@@ -86,7 +86,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
-                            text = "Jakarta",
+                            text = homeUiState.locationName,
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
