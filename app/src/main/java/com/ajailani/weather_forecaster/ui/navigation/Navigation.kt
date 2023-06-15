@@ -16,7 +16,7 @@ fun Navigation(
     startDestination: String
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(Screen.HomeScreen.route) {
+        composable(Screen.Home.route) {
             val homeViewModel = koinViewModel<HomeViewModel>()
             val onEvent = homeViewModel::onEvent
             val homeUiState = homeViewModel.homeUiState
@@ -27,7 +27,7 @@ fun Navigation(
             )
         }
 
-        composable(Screen.SearchLocationScreen.route) {
+        composable(Screen.SearchLocation.route) {
             val searchLocationViewModel = koinViewModel<SearchLocationViewModel>()
             val onEvent = searchLocationViewModel::onEvent
             val searchLocationUiState = searchLocationViewModel.searchLocationUiState
