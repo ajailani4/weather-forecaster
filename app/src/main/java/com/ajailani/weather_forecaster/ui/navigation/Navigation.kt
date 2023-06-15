@@ -1,9 +1,12 @@
 package com.ajailani.weather_forecaster.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ajailani.weather_forecaster.ui.screen.home.HomeScreen
 import com.ajailani.weather_forecaster.ui.screen.home.HomeViewModel
 import com.ajailani.weather_forecaster.ui.screen.search_location.SearchLocationScreen
@@ -23,7 +26,10 @@ fun Navigation(
 
             HomeScreen(
                 onEvent = onEvent,
-                homeUiState = homeUiState
+                homeUiState = homeUiState,
+                onNavigateToSearchLocation = {
+                    navController.navigate(Screen.SearchLocation.route)
+                }
             )
         }
 
@@ -35,8 +41,16 @@ fun Navigation(
             SearchLocationScreen(
                 onEvent = onEvent,
                 searchLocationUiState = searchLocationUiState,
+                isFirstTimeUserHere = navController.previousBackStackEntry == null,
+                onNavigateUp = { navController.navigateUp() },
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.route)
+                    navController.navigate(Screen.Home.route) {
+                        launchSingleTop = true
+
+                        popUpTo(Screen.SearchLocation.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

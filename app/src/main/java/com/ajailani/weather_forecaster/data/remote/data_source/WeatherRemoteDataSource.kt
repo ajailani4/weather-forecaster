@@ -1,17 +1,17 @@
 package com.ajailani.weather_forecaster.data.remote.data_source
 
-import com.ajailani.weather_forecaster.data.remote.api_service.WeatherService
+import com.ajailani.weather_forecaster.data.remote.api_service.WeatherApiService
 
-class WeatherRemoteDataSource(private val weatherService: WeatherService) {
+class WeatherRemoteDataSource(private val weatherApiService: WeatherApiService) {
     suspend fun getCurrentWeather(
         lat: Double,
         lon: Double,
         units: String?
-    ) = weatherService.getCurrentWeather(
+    ) = weatherApiService.getCurrentWeather(
         lat = lat,
         lon = lon,
         units = units
     )
 
-    suspend fun getLocations(query: String) = weatherService.getLocations(query)
+    suspend fun getLocations(query: String) = weatherApiService.getLocations(query)
 }

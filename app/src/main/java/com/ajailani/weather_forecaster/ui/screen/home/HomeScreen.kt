@@ -1,5 +1,6 @@
 package com.ajailani.weather_forecaster.ui.screen.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,7 +47,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun HomeScreen(
     onEvent: (HomeEvent) -> Unit,
-    homeUiState: HomeUiState
+    homeUiState: HomeUiState,
+    onNavigateToSearchLocation: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -79,7 +81,7 @@ fun HomeScreen(
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row {
+                    Row(modifier = Modifier.clickable { onNavigateToSearchLocation() }) {
                         Icon(
                             imageVector = Icons.Outlined.LocationOn,
                             contentDescription = "Location icon"
