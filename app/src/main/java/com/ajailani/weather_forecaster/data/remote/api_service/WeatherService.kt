@@ -4,7 +4,7 @@ import com.ajailani.weather_forecaster.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 
-class WeatherApiService(private val httpClient: HttpClient) {
+class WeatherService(private val httpClient: HttpClient) {
     suspend fun getCurrentWeather(
         lat: Double,
         lon: Double,

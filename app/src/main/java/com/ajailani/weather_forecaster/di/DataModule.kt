@@ -4,7 +4,7 @@ import androidx.room.Room
 import com.ajailani.weather_forecaster.data.local.PreferencesDataStore
 import com.ajailani.weather_forecaster.data.local.database.WeatherDatabase
 import com.ajailani.weather_forecaster.data.local.data_source.WeatherLocalDataSource
-import com.ajailani.weather_forecaster.data.remote.api_service.WeatherApiService
+import com.ajailani.weather_forecaster.data.remote.api_service.WeatherService
 import com.ajailani.weather_forecaster.data.remote.data_source.WeatherRemoteDataSource
 import com.ajailani.weather_forecaster.data.repository.WeatherRepositoryImpl
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
@@ -13,7 +13,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
     // API Service
-    single { WeatherApiService(get()) }
+    single { WeatherService(get()) }
 
     // Database
     single {
