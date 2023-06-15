@@ -1,13 +1,19 @@
 package com.ajailani.weather_forecaster.ui.screen.search_location.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +38,7 @@ import androidx.compose.ui.unit.dp
 fun SearchTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    onClearText: () -> Unit,
     onSearch: () -> Unit
 ) {
     val localFocusManager = LocalFocusManager.current
@@ -58,12 +65,16 @@ fun SearchTextField(
         keyboardActions = KeyboardActions(onSearch = {
             localFocusManager.clearFocus()
             keyboardController?.hide()
-            onSearch()
+
+            if (value.isNotEmpty()) onSearch()
         }),
         decorationBox = { innerTextField ->
             Row(
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 if (value.isEmpty() && !isFocused) {
                     Text(
@@ -74,6 +85,18 @@ fun SearchTextField(
                 }
 
                 innerTextField()
+
+                if (value.isNotEmpty()) {
+                    IconButton(
+                        modifier = Modifier.size(20.dp),
+                        onClick = { onClearText() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Clear text"
+                        )
+                    }
+                }
             }
         }
     )

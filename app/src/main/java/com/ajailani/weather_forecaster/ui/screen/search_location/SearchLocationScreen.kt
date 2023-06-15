@@ -63,6 +63,7 @@ fun SearchLocationScreen(
                 SearchTextField(
                     value = searchLocationUiState.query,
                     onValueChange = { onEvent(SearchLocationEvent.OnQueryChanged(it)) },
+                    onClearText = { onEvent(SearchLocationEvent.OnQueryChanged("")) },
                     onSearch = { onEvent(SearchLocationEvent.GetLocations) }
                 )
             }
