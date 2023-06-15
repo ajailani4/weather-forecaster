@@ -10,7 +10,6 @@ import com.ajailani.weather_forecaster.domain.use_case.GetWeatherInfoUseCase
 import com.ajailani.weather_forecaster.domain.use_case.SyncWeatherInfoUseCase
 import com.ajailani.weather_forecaster.util.Resource
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
