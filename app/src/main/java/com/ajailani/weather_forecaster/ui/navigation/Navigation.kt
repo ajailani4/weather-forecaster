@@ -41,7 +41,8 @@ fun Navigation(
             SearchLocationScreen(
                 onEvent = onEvent,
                 searchLocationUiState = searchLocationUiState,
-                isFirstTimeUserHere = navController.previousBackStackEntry == null,
+                isFirstTimeUserHere = navController.previousBackStackEntry == null
+                        && startDestination == Screen.SearchLocation.route,
                 onNavigateUp = { navController.navigateUp() },
                 onNavigateToHome = {
                     navController.navigate(Screen.Home.route) {

@@ -103,11 +103,5 @@ fun SearchLocationScreen(
                 }
             }
         }
-
-        if (isFirstTimeUserHere) {
-            LaunchedEffect(snackbarHostState) {
-                snackbarHostState.showSnackbar("Since you are first time here, please enter a location first")
-            }
-        }
     }
 }
