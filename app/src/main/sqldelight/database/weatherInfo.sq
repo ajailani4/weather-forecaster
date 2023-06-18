@@ -1,0 +1,25 @@
+CREATE TABLE weatherInfoEntity(
+    id INTEGER NOT NULL PRIMARY KEY,
+    main TEXT NOT NULL,
+    description TEXT NOT NULL,
+    temp REAL NOT NULL,
+    feelsLike REAL NOT NULL,
+    humidity INTEGER NOT NULL,
+    speed REAL NOT NULL
+);
+
+insertWeatherInfo:
+INSERT OR REPLACE
+INTO weatherInfoEntity(
+    id,
+    main,
+    description,
+    temp,
+    feelsLike,
+    humidity,
+    speed
+) VALUES (1, ?, ?, ?, ?, ?, ?);
+
+getWeatherInfo:
+SELECT *
+FROM weatherInfoEntity;

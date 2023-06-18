@@ -117,7 +117,7 @@ dependencies {
 
 sqldelight {
     databases {
-        Database {
+        WeatherForecasterDatabase {
             packageName = "com.ajailani.weather_forecaster.database"
         }
     }
