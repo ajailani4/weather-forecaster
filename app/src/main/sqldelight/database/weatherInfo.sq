@@ -2,10 +2,10 @@ CREATE TABLE weatherInfoEntity(
     id INTEGER NOT NULL PRIMARY KEY,
     main TEXT NOT NULL,
     description TEXT NOT NULL,
-    temp REAL NOT NULL,
-    feelsLike REAL NOT NULL,
-    humidity INTEGER NOT NULL,
-    speed REAL NOT NULL
+    temp REAL,
+    feelsLike REAL,
+    humidity INTEGER,
+    speed REAL
 );
 
 insertWeatherInfo:
