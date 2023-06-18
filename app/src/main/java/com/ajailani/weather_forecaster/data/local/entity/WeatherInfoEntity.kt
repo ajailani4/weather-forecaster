@@ -1,11 +1,6 @@
 package com.ajailani.weather_forecaster.data.local.entity
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class WeatherInfoEntity(
-    @PrimaryKey
     val id: Int = 1,
     val main: String,
     val description: String,
