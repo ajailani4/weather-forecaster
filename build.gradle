@@ -2,7 +2,8 @@ buildscript {
     ext {
         koin_version = '3.4.0'
         ktor_version = '2.2.3'
-        room_version = "2.5.1"
+        room_version = '2.5.1'
+        sqldelight_version = '2.0.0-rc01'
     }
 }
 

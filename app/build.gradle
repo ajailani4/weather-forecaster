@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlinx-serialization'
     id 'kotlin-kapt'
+    id 'app.cash.sqldelight' version "$sqldelight_version"
 }
 
 android {
@@ -91,6 +92,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
+    // SQLDelight
+    implementation "app.cash.sqldelight:android-driver:$sqldelight_version"
+
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
@@ -109,4 +113,12 @@ dependencies {
     // Debugging
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+}
+
+sqldelight {
+    databases {
+        Database {
+            packageName = "com.ajailani.weather_forecaster.database"
+        }
+    }
 }
