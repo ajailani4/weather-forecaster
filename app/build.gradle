@@ -94,13 +94,14 @@ dependencies {
 
     // SQLDelight
     implementation "app.cash.sqldelight:android-driver:$sqldelight_version"
+    implementation "app.cash.sqldelight:coroutines-extensions:$sqldelight_version"
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Unit Test
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation "org.mockito:mockito-inline:5.2.0"
 
