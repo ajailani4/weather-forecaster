@@ -21,7 +21,7 @@ val dataModule = module {
         AndroidSqliteDriver(
             WeatherForecasterDatabase.Schema,
             androidContext(),
-            "weather_forecaster_db"
+            "weather_forecaster.db"
         )
     }
 

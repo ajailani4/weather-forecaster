@@ -1,14 +1,14 @@
 package com.ajailani.weather_forecaster.data.local.data_source
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.ajailani.weather_forecaster.WeatherForecasterDatabase
-import com.ajailani.weather_forecaster.data.local.entity.WeatherInfoEntity
-import com.ajailani.weather_forecaster.data.mapper.toWeatherInfo
-import kotlinx.coroutines.flow.flowOf
+import database.WeatherInfoEntity
+import kotlinx.coroutines.flow.map
 
 class WeatherLocalDataSource(weatherForecasterDatabase: WeatherForecasterDatabase) {
     private val weatherInfoQueries = weatherForecasterDatabase.weatherInfoQueries
 
-    fun insertWeatherInfo(weatherInfoEntity: database.WeatherInfoEntity) {
+    fun insertWeatherInfo(weatherInfoEntity: WeatherInfoEntity) {
         weatherInfoQueries.insertWeatherInfo(
             main = weatherInfoEntity.main,
             description = weatherInfoEntity.description,
@@ -20,9 +20,8 @@ class WeatherLocalDataSource(weatherForecasterDatabase: WeatherForecasterDatabas
     }
 
     fun getWeatherInfo() =
-        flowOf(
-            weatherInfoQueries
-                .getWeatherInfo()
-                .executeAsOneOrNull()
-        )
+        weatherInfoQueries
+            .getWeatherInfo()
+            .asFlow()
+            .map { it.executeAsOneOrNull() }
 }

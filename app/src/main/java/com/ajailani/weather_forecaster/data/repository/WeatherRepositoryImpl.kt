@@ -9,11 +9,13 @@ import com.ajailani.weather_forecaster.data.remote.data_source.WeatherRemoteData
 import com.ajailani.weather_forecaster.data.remote.dto.LocationDto
 import com.ajailani.weather_forecaster.data.remote.dto.WeatherInfoDto
 import com.ajailani.weather_forecaster.domain.model.Location
+import com.ajailani.weather_forecaster.domain.model.WeatherInfo
 import com.ajailani.weather_forecaster.domain.repository.WeatherRepository
 import com.ajailani.weather_forecaster.util.Resource
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
