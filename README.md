@@ -14,7 +14,7 @@ This app implements Clean Architecture which has three main layers, UI/Presentat
 - Coroutines
 - Ktor Client
 - Kotlin Serialization
-- Room
+- SQLDelight
 - Jetpack DataStore
 - Mockito
 
