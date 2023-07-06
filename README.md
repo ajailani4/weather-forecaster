@@ -1,5 +1,5 @@
 # WeatherForecaster
-A simple weather forecasting Android app.
+A weather forecast Android app.
 
 ## Architecture
 This app implements Clean Architecture which has three main layers, UI/Presentation, Domain, and Data layer. This is an offline-first app which means the main data source of the app is the local database. When user does not connect to the internet, the data will be retrieved from the local database. Then, when user connect to the internet, the local database data will be synced with the remote data which fetched from the Rest API. I tried and learned using TDD (Test-Driven Development) approach while developing this app.
